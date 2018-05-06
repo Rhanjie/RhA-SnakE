@@ -1,6 +1,7 @@
 package me.rhanjie.compo.game.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import me.rhanjie.compo.game.characters.Player
 import me.rhanjie.compo.game.extend.Text
@@ -9,38 +10,24 @@ import me.rhanjie.compo.game.extend.Text
 class Hud {
     companion object {
         var stage: Stage = Stage()
+        var scoreLabel: Text = Text()
 
-        //var style = TextButtonStyle()
-        //lateinit var button: Button
-
-        var orangeJuiceLabel = Text()
-        var tenantsLabel     = Text()
+        var score: Int = 0
 
         fun create() {
-            //style.up   = TextureRegionDrawable(TextureRegion(TexturesManager.textures["hud"]))
-            //style.down = TextureRegionDrawable(TextureRegion(TexturesManager.textures["shop"]))
+            scoreLabel.text = "Score: "
+            scoreLabel.x = Gdx.graphics.width / 2F
+            scoreLabel.y = 100F
 
-            //button = Button(style)
-            //button.width = 300F
-
-            //stage.addActor(button)
-            stage.addActor(orangeJuiceLabel)
-            stage.addActor(tenantsLabel)
-
-            orangeJuiceLabel.x = Gdx.graphics.width/2F
-            orangeJuiceLabel.y = 100F
-
-            tenantsLabel.x = Gdx.graphics.width/2F
-            tenantsLabel.y = 80F
+            stage.addActor(scoreLabel)
         }
 
-        fun update(player: Player){
-            orangeJuiceLabel.update("You have ${player.orangeJuice} orange juices")
+        fun update(){
+            scoreLabel.text = "Score: $score"
         }
 
         fun render() {
             stage.act(Gdx.graphics.deltaTime)
-
             stage.draw()
         }
     }

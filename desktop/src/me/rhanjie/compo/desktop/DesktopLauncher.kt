@@ -2,15 +2,16 @@ package me.rhanjie.compo.desktop
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import me.rhanjie.compo.game.GameManager
+import me.rhanjie.compo.game.MyGame
+import me.rhanjie.compo.game.state.GameplayScreen
 
 object DesktopLauncher {
     @JvmStatic
     fun main(arg: Array<String>) {
         val config = LwjglApplicationConfiguration()
-            config.width  = 1920
-            config.height = 1080
+            config.width  = 1366
+            config.height = 768
 
-        LwjglApplication(GameManager(), config)
+        LwjglApplication(MyGame(), config)
     }
 }
