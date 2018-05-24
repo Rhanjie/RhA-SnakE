@@ -11,6 +11,7 @@ object DesktopLauncher {
         val config = LwjglApplicationConfiguration()
             config.width  = 1366
             config.height = 768
+            //config.fullscreen = true
 
         LwjglApplication(MyGame(), config)
     }

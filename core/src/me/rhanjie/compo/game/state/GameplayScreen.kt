@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
+import javafx.scene.input.KeyCode
 import me.rhanjie.compo.game.MyGame
 import me.rhanjie.compo.game.characters.Player
 import me.rhanjie.compo.game.map.Terrain
@@ -34,19 +35,16 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
     }
 
     override fun update(){
-        /*if(Gdx.input.isTouched){ //DEBUG
-            val position = player.camera.unproject(Vector3(Gdx.input.x.toFloat(), Gdx.input.y.toFloat(), 0F)) //getMousePositionInGame()
-            var tile = terrain.getTile(1, position.x, position.y)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+            Gdx.app.exit()
 
-            if(tile != null)
-                tile.color = Color.CORAL
-        }*/
 
-        player.update()
-
-        player.checkCollisions(terrain)
-
+        player.update(terrain)
         Hud.update()
+
+        if (player.isDead){
+            this.create()
+        }
     }
 
     override fun render(delta: Float){

@@ -27,6 +27,7 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
     var lastTilePosition: Vector2
 
     var speed: Float = 400F
+    var isDead: Boolean = false
 
     init {
         this.setPosition(spawnPosition.x, spawnPosition.y)
@@ -35,33 +36,26 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
         lastTilePosition = Vector2(x / Tile.SIZE, y / Tile.SIZE)
         smoothPosition = Vector2(x, y)
 
-        this.update()
+        //this.update()
     }
 
     fun handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN) {
             direction = Direction.UP
             this.rotation = 90F
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP) {
             direction = Direction.DOWN
             this.rotation = 270F
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT) {
             direction = Direction.RIGHT
             this.rotation = 0F
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT) {
             direction = Direction.LEFT
             this.rotation = 180F
         }
-
-        /*when(direction){
-            Direction.UP    -> smoothPosition.y += speed * Gdx.graphics.getDeltaTime()
-            Direction.DOWN  -> smoothPosition.y -= speed * Gdx.graphics.getDeltaTime()
-            Direction.RIGHT -> smoothPosition.x += speed * Gdx.graphics.getDeltaTime()
-            Direction.LEFT  -> smoothPosition.x -= speed * Gdx.graphics.getDeltaTime()
-        }*/
     }
 
     fun move(){
@@ -79,6 +73,7 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
             for (index in bodies.size - 1 downTo 0) {
                 if (index == 0)
                     bodies[0].setPosition(x, y)
+
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
         }
@@ -87,12 +82,12 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
     fun checkCollisions(terrain: Terrain) {
         for (index in (1..bodies.size - 1)) {
             if (x == bodies[index].x && y == bodies[index].y) {
-                Gdx.app.exit()
+                isDead = true
             }
         }
 
         if(terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]!!.type == TileType.STONE) {
-            Gdx.app.exit()
+            isDead = true
         }
 
         if (terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()] != null) {
@@ -114,9 +109,10 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
         }
     }
 
-    fun update() {
+    fun update(terrain: Terrain) {
         this.handleInput()
         this.move()
+        this.checkCollisions(terrain)
 
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
         y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE

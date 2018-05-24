@@ -15,6 +15,8 @@ class Hud {
         var score: Int = 0
 
         fun create() {
+            score = 0
+
             scoreLabel.text = "Score: "
             scoreLabel.x = Gdx.graphics.width / 2F
             scoreLabel.y = 100F
