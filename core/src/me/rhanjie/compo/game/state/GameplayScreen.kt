@@ -39,7 +39,8 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
             Gdx.app.exit()
 
 
-        player.update(terrain)
+        player.update()
+        player.checkCollisions(terrain)
         Hud.update()
 
         if (player.isDead){

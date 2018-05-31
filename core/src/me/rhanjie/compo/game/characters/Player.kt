@@ -3,6 +3,7 @@ package me.rhanjie.compo.game.characters
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
@@ -12,22 +13,12 @@ import me.rhanjie.compo.game.map.Terrain
 import me.rhanjie.compo.game.map.Tile
 import me.rhanjie.compo.game.map.TileType
 import me.rhanjie.compo.game.resources.TexturesManager
+import me.rhanjie.compo.game.characters.Character
 import me.rhanjie.compo.game.ui.Hud
 
-class Player constructor(spawnPosition: Vector2, texture: Texture): Image(texture) {
-    enum class Direction{
-        UP, DOWN, RIGHT, LEFT
-    }
-
+class Player constructor(spawnPosition: Vector2, texture: Texture): Character(texture) {
     var camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
     var bodies: MutableList<Image> = mutableListOf()
-
-    var direction: Direction = Direction.RIGHT
-    var smoothPosition: Vector2
-    var lastTilePosition: Vector2
-
-    var speed: Float = 400F
-    var isDead: Boolean = false
 
     init {
         this.setPosition(spawnPosition.x, spawnPosition.y)
@@ -35,8 +26,6 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
 
         lastTilePosition = Vector2(x / Tile.SIZE, y / Tile.SIZE)
         smoothPosition = Vector2(x, y)
-
-        //this.update()
     }
 
     fun handleInput() {
@@ -76,6 +65,8 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
 
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
+
+            this.setBodiesColor()
         }
     }
 
@@ -100,19 +91,28 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Image(textur
                 else bodies.last().setPosition(bodies[bodies.lastIndex - 1].x, bodies[bodies.lastIndex - 1].y)
 
                 stage.addActor(bodies.last())
-                speed += 50
 
+                speed += 50
                 Hud.score += 50
+
+                this.setBodiesColor()
 
                 terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()] = null
             }
         }
     }
 
-    fun update(terrain: Terrain) {
+    fun setBodiesColor(){
+        for (index in bodies.size - 1 downTo 0) {
+            var forceChangingColor = 5F
+
+            bodies[index].color = Color(1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F)
+        }
+    }
+
+    override fun update() {
         this.handleInput()
         this.move()
-        this.checkCollisions(terrain)
 
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
         y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
