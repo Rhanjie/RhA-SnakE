@@ -7,27 +7,27 @@ import me.rhanjie.compo.game.random
 
 
 class Terrain constructor(layers: Int, width: Int, height: Int,  stage: Stage){
-    var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {Tile(TileType.GRASS, TexturesManager.textures["grass${(1..11).random()}"]!!)})})})
+    var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {Tile(TileType.GRASS, TexturesManager.getTexture("grass${(1..11).random()}") )} )} )} )
 
     init {
         for(layer in tiles.indices) {
-            for (y in tiles[layer].indices) {
-                for (x in tiles[layer][y].indices) {
-                    if(layer == 0){
+            for(y in tiles[layer].indices) {
+                for(x in tiles[layer][y].indices) {
+                    if (layer == 0){
                         if(x == 0 || x == tiles[layer][y].size - 1 || y == 0 || y == tiles[layer].size - 1){
-                            tiles[layer][y][x] = Tile(TileType.STONE, TexturesManager.textures["stone1"]!!)
+                            tiles[layer][y][x] = Tile(TileType.STONE,  TexturesManager.getTexture("stone1"))
                         }
                     }
 
-                    if(layer == 1) {
+                    if (layer == 1) {
                         tiles[layer][y][x] = null
 
                         if ((0..100).random() > 80 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            tiles[layer][y][x] = Tile(TileType.BRUSH, TexturesManager.textures["brush1"]!!)
+                            tiles[layer][y][x] = Tile(TileType.BRUSH, TexturesManager.getTexture("brush1"))
                         }
 
                         if ((0..100).random() > 90 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            tiles[layer][y][x] = Tile(TileType.APPLE, TexturesManager.textures["apple1"]!!)
+                            tiles[layer][y][x] = Tile(TileType.APPLE, TexturesManager.getTexture("apple1"))
                         }
                     }
 

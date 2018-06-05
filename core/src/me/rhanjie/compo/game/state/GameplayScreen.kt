@@ -24,9 +24,9 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
         super.create()
 
         terrain = Terrain(2, 30, 20, stage)
-        player = Player(Vector2(terrain.tiles[0][0].size * Tile.SIZE / 2, terrain.tiles[0].size * Tile.SIZE / 2), TexturesManager.textures["snakehead1"]!!)
+        player = Player(Vector2(terrain.tiles[0][0].size * Tile.SIZE / 2, terrain.tiles[0].size * Tile.SIZE / 2), TexturesManager.getTexture("snakehead1"))
 
-        stage = Stage(StretchViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat(), player.camera), batch)
+        stage = Stage(StretchViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat(), player.camera))
         stage.addActor(player)
 
         player.camera.zoom = 2F
@@ -61,6 +61,8 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
         batch.begin()
         terrain.render(1, batch)
         batch.end()
+
+        batch.projectionMatrix = player.camera.combined
 
         Hud.render()
     }

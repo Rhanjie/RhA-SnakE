@@ -18,7 +18,6 @@ import me.rhanjie.compo.game.ui.Hud
 
 class Player constructor(spawnPosition: Vector2, texture: Texture): Character(texture) {
     var camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
-    var bodies: MutableList<Image> = mutableListOf()
 
     init {
         this.setPosition(spawnPosition.x, spawnPosition.y)
@@ -26,48 +25,6 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
 
         lastTilePosition = Vector2(x / Tile.SIZE, y / Tile.SIZE)
         smoothPosition = Vector2(x, y)
-    }
-
-    fun handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN) {
-            direction = Direction.UP
-            this.rotation = 90F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP) {
-            direction = Direction.DOWN
-            this.rotation = 270F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT) {
-            direction = Direction.RIGHT
-            this.rotation = 0F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT) {
-            direction = Direction.LEFT
-            this.rotation = 180F
-        }
-    }
-
-    fun move(){
-        when(direction){
-            Direction.UP    -> smoothPosition.y += speed * Gdx.graphics.getDeltaTime()
-            Direction.DOWN  -> smoothPosition.y -= speed * Gdx.graphics.getDeltaTime()
-            Direction.RIGHT -> smoothPosition.x += speed * Gdx.graphics.getDeltaTime()
-            Direction.LEFT  -> smoothPosition.x -= speed * Gdx.graphics.getDeltaTime()
-        }
-
-        if(lastTilePosition.x != (smoothPosition.x / Tile.SIZE).toInt().toFloat() || lastTilePosition.y != (smoothPosition.y / Tile.SIZE).toInt().toFloat()) {
-            lastTilePosition.x = (smoothPosition.x / Tile.SIZE).toInt().toFloat()
-            lastTilePosition.y = (smoothPosition.y / Tile.SIZE).toInt().toFloat()
-
-            for (index in bodies.size - 1 downTo 0) {
-                if (index == 0)
-                    bodies[0].setPosition(x, y)
-
-                else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
-            }
-
-            this.setBodiesColor()
-        }
     }
 
     fun checkCollisions(terrain: Terrain) {
@@ -83,7 +40,7 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
 
         if (terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()] != null) {
             if (terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]!!.type == TileType.APPLE) {
-                bodies.add(Image(TexturesManager.textures["snakebody1"]))
+                bodies.add(Image(TexturesManager.getTexture("snakebody1")))
 
                 if(bodies.size <= 1)
                     bodies.last().setPosition(x, y)
@@ -102,24 +59,36 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
         }
     }
 
-    fun setBodiesColor(){
-        for (index in bodies.size - 1 downTo 0) {
-            var forceChangingColor = 5F
-
-            bodies[index].color = Color(1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F)
-        }
-    }
-
     override fun update() {
         this.handleInput()
-        this.move()
 
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
         y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
 
-        camera.position.x = x
-        camera.position.y = y
+        camera.position.x = smoothPosition.x
+        camera.position.y = smoothPosition.y
 
         camera.update()
+    }
+
+    private fun handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN) {
+            direction = Direction.UP
+            this.rotation = 90F
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP) {
+            direction = Direction.DOWN
+            this.rotation = 270F
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT) {
+            direction = Direction.RIGHT
+            this.rotation = 0F
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT) {
+            direction = Direction.LEFT
+            this.rotation = 180F
+        }
+
+        this.move()
     }
 }

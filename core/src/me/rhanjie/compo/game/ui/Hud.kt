@@ -1,10 +1,13 @@
 package me.rhanjie.compo.game.ui
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Stage
 import me.rhanjie.compo.game.characters.Player
 import me.rhanjie.compo.game.extend.Text
+import me.rhanjie.compo.game.resources.TexturesManager
 
 
 class Hud {

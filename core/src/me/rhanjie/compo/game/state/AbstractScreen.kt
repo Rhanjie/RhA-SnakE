@@ -28,11 +28,6 @@ abstract class AbstractManager constructor(game: MyGame): Screen {
 
     abstract fun update()
 
-    private fun clearScreen(r: Float, g: Float, b: Float) {
-        Gdx.gl.glClearColor(r/255, g/255, b/255, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-    }
-
     override fun render(delta: Float) {
         this.update()
 
@@ -59,5 +54,10 @@ abstract class AbstractManager constructor(game: MyGame): Screen {
     }
 
     override fun resize(width: Int, height: Int) {
+    }
+
+    private fun clearScreen(r: Float, g: Float, b: Float) {
+        Gdx.gl.glClearColor(r/255, g/255, b/255, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     }
 }

@@ -7,6 +7,12 @@ import java.util.*
 fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 
 class MyGame: Game() {
+    companion object {
+        val WIDTH = 1366
+        val HEIGHT = 768
+        val TITLE = "SnakeGame v.1.1"
+    }
+
     override fun create() {
         this.setScreen(GameplayScreen(this))
     }

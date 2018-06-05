@@ -1,4 +1,7 @@
 {
+    textureNull:{
+        value:textureNull.png
+    },
     grass1:{
         value:grass1.png
     },
