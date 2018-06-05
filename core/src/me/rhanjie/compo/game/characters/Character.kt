@@ -26,10 +26,10 @@ abstract class Character constructor(texture: Texture): Image(texture) {
 
     protected fun move(){
         when(direction){
-            Direction.UP    -> smoothPosition.y += speed * Gdx.graphics.getDeltaTime()
-            Direction.DOWN  -> smoothPosition.y -= speed * Gdx.graphics.getDeltaTime()
-            Direction.RIGHT -> smoothPosition.x += speed * Gdx.graphics.getDeltaTime()
-            Direction.LEFT  -> smoothPosition.x -= speed * Gdx.graphics.getDeltaTime()
+            Direction.UP    -> smoothPosition.y += speed * Gdx.graphics.deltaTime
+            Direction.DOWN  -> smoothPosition.y -= speed * Gdx.graphics.deltaTime
+            Direction.RIGHT -> smoothPosition.x += speed * Gdx.graphics.deltaTime
+            Direction.LEFT  -> smoothPosition.x -= speed * Gdx.graphics.deltaTime
         }
 
         if(lastTilePosition.x != (smoothPosition.x / Tile.SIZE).toInt().toFloat() || lastTilePosition.y != (smoothPosition.y / Tile.SIZE).toInt().toFloat()) {
