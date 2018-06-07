@@ -1,6 +1,5 @@
 package me.rhanjie.compo.game.map
 
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import me.rhanjie.compo.game.random
 import me.rhanjie.compo.game.resources.TexturesManager

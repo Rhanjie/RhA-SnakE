@@ -53,4 +53,16 @@
     snakebody1:{
         value:snakebody1.png
     },
+    speed:{
+        value:speed.png
+    },
+    slow:{
+        value:slow.png
+    },
+    increase:{
+        value:increase.png
+    },
+    decrease:{
+        value:decrease.png
+    },
 }

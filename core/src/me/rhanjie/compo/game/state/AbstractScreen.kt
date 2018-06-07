@@ -26,10 +26,10 @@ abstract class AbstractManager constructor(game: MyGame): Screen {
         Gdx.input.inputProcessor = stage
     }
 
-    abstract fun update()
+    abstract fun update(delta: Float)
 
     override fun render(delta: Float) {
-        this.update()
+        this.update(delta)
 
         this.clearScreen(0F, 125F, 255F)
     }

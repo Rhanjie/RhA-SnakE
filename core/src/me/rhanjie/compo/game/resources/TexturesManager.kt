@@ -17,7 +17,7 @@ class TexturesManager{
             var jsonValues = JsonReader().parse(file.readString())
 
             println("Loading resources...")
-            for(index in (0 until 18)) { //TODO: Get size from file
+            for(index in (0 until 22)) { //TODO: Get size from file
                 textures[jsonValues[index].name] = Texture(jsonValues[index].getString("value"))
 
                 println("- [${jsonValues[index].name}] ${jsonValues[index].getString("value")}")

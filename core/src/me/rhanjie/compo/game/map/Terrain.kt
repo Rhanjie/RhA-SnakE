@@ -1,14 +1,17 @@
 package me.rhanjie.compo.game.map
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
 import me.rhanjie.compo.game.resources.TexturesManager
 import com.badlogic.gdx.scenes.scene2d.Stage
 import me.rhanjie.compo.game.random
 
 
-class Terrain constructor(layers: Int, width: Int, height: Int,  stage: Stage){
+class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
     var tileManager: TileManager = TileManager()
     var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {tileManager.getCopy(TileType.GRASS)} )} )} )
+
+    //var bonusManager: BonusManager = BonusManager()
 
     init {
         for(layer in tiles.indices) {
@@ -18,6 +21,8 @@ class Terrain constructor(layers: Int, width: Int, height: Int,  stage: Stage){
                         if(x == 0 || x == tiles[layer][y].size - 1 || y == 0 || y == tiles[layer].size - 1){
                             tiles[layer][y][x] = tileManager.getCopy(TileType.STONE)
                         }
+
+                        //...
                     }
 
                     if (layer == 1) {
@@ -25,10 +30,14 @@ class Terrain constructor(layers: Int, width: Int, height: Int,  stage: Stage){
 
                         if ((0..100).random() > 80 && tiles[0][y][x]!!.type != TileType.STONE) {
                             tiles[layer][y][x] = tileManager.getCopy(TileType.BRUSH)
+
+                            //bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
 
-                        if ((0..100).random() > 90 && tiles[0][y][x]!!.type != TileType.STONE) {
+                        if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
                             tiles[layer][y][x] = tileManager.getCopy(TileType.APPLE)
+
+
                         }
                     }
 
