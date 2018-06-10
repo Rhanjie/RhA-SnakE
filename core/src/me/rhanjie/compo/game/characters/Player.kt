@@ -40,11 +40,11 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
             //...
         }
 
-        var bonus: AbstractBonus? = terrain.bonusManager.getAbstractBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+        var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         if (bonus != null){
             bonus.collision(this)
 
-            terrain.bonusManager.removeAbstractBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         }
     }
 

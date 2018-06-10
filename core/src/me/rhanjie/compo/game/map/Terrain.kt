@@ -36,10 +36,13 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
                             tiles[layer][y][x] = tileManager.getCopy(TileType.BRUSH)
                         }
 
-                        if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            //TODO: Fix this because adding to stage doesn't work
-                            //bonusManager.addAbstractBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
-                            //AbstractBonusManager.addAbstractBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
+                        //TODO: Add dynamic bonus spawning
+                        if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
+                            bonusManager.addBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
+                        }
+
+                        else if ((0..100).random() > 98 && tiles[0][y][x]!!.type != TileType.STONE) {
+                            bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
                     }
 

@@ -11,7 +11,7 @@ class BonusManager {
         this.load()
     }
 
-    fun addAbstractBonus(BonusType: BonusType, positionOnMap: Vector2, stage: Stage){
+    fun addBonus(BonusType: BonusType, positionOnMap: Vector2, stage: Stage){
         bonuses[positionOnMap] = this.getCopy(BonusType, positionOnMap)
 
         stage.addActor(bonuses[positionOnMap])
@@ -22,8 +22,8 @@ class BonusManager {
             AbstractBonus.value.update()
     }
 
-    fun getAbstractBonusOnPosition(positionOnMap: Vector2): AbstractBonus? = bonuses[positionOnMap]
-    fun removeAbstractBonus(positionOnMap: Vector2){
+    fun getBonusOnPosition(positionOnMap: Vector2): AbstractBonus? = bonuses[positionOnMap]
+    fun removeBonus(positionOnMap: Vector2){
         if (bonuses.containsKey(positionOnMap) == true) {
             bonuses[positionOnMap]!!.remove()
             bonuses.remove(positionOnMap)

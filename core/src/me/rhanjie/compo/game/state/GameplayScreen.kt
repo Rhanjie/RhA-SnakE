@@ -19,29 +19,22 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
     lateinit var terrain: Terrain
     lateinit var player: Player
 
+    companion object {
+        val terrainLayers = 2
+        val terrainWidth = 30
+        val terrainHeight = 20
+    }
+
     override fun create(){
         super.create()
 
-        terrain = Terrain(2, 30, 20, stage)
-        player = Player(Vector2(terrain.tiles[0][0].size * Tile.SIZE / 2, terrain.tiles[0].size * Tile.SIZE / 2), TexturesManager.getTexture("snakehead1"))
+        player = Player(Vector2(terrainWidth * Tile.SIZE / 2, terrainHeight * Tile.SIZE / 2), TexturesManager.getTexture("snakehead1"))
+        player.camera.zoom = 2F
 
         stage = Stage(StretchViewport(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat(), player.camera), batch)
         stage.addActor(player)
 
-        player.camera.zoom = 2F
-
-        //TODO: Delete code below
-        for(layer in terrain.tiles.indices) {
-            for (y in terrain.tiles[layer].indices) {
-                for (x in terrain.tiles[layer][y].indices) {
-                    if((0..100).random() > 95)
-                        terrain.bonusManager.addAbstractBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
-                    else if((0..100).random() > 95){
-                        terrain.bonusManager.addAbstractBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
-                    }
-                }
-            }
-        }
+        terrain = Terrain(terrainLayers, terrainWidth, terrainHeight, stage)
 
         Hud.create()
     }
