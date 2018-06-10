@@ -19,8 +19,6 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
     lateinit var terrain: Terrain
     lateinit var player: Player
 
-    lateinit var bonusManager: BonusManager
-
     override fun create(){
         super.create()
 
@@ -32,24 +30,25 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
 
         player.camera.zoom = 2F
 
-        bonusManager = BonusManager()
-
         for(layer in terrain.tiles.indices) {
             for (y in terrain.tiles[layer].indices) {
                 for (x in terrain.tiles[layer][y].indices) {
                     if((0..100).random() > 95)
-                        bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
+                        terrain.bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
+                    else if((0..100).random() > 95){
+                        terrain.bonusManager.addBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
+                    }
                 }
             }
         }
 
+        //stage.addActor(player)
         Hud.create()
     }
 
     override fun update(delta: Float){
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
             Gdx.app.exit()
-
 
         player.update()
         player.checkCollisions(terrain)

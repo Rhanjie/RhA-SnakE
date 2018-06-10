@@ -44,8 +44,8 @@
     brush1:{
         value:brush1.png
     },
-    apple1:{
-        value:apple1.png
+    apple:{
+        value:apple.png
     },
     snakehead1:{
         value:snakehead1.png

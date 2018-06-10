@@ -5,7 +5,7 @@ import me.rhanjie.compo.game.random
 import me.rhanjie.compo.game.resources.TexturesManager
 
 enum class TileType {
-    GRASS, STONE, APPLE, BRUSH
+    GRASS, STONE, BRUSH
 }
 
 class Tile constructor(var type: TileType, private var number: Int, var collision: Boolean = false)

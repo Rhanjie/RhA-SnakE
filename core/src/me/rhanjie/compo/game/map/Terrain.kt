@@ -11,7 +11,7 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
     var tileManager: TileManager = TileManager()
     var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {tileManager.getCopy(TileType.GRASS)} )} )} )
 
-    //var bonusManager: BonusManager = BonusManager()
+    var bonusManager: BonusManager = BonusManager()
 
     init {
         for(layer in tiles.indices) {
@@ -35,7 +35,7 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
                         }
 
                         if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            tiles[layer][y][x] = tileManager.getCopy(TileType.APPLE)
+                            //tiles[layer][y][x] = tileManager.getCopy(TileType.APPLE)
 
 
                         }

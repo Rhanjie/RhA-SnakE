@@ -32,7 +32,7 @@ abstract class Character constructor(texture: Texture): Image(texture) {
             Direction.LEFT  -> smoothPosition.x -= speed * Gdx.graphics.deltaTime
         }
 
-        if(lastTilePosition.x != (smoothPosition.x / Tile.SIZE).toInt().toFloat() || lastTilePosition.y != (smoothPosition.y / Tile.SIZE).toInt().toFloat()) {
+        if (lastTilePosition.x != (smoothPosition.x / Tile.SIZE).toInt().toFloat() || lastTilePosition.y != (smoothPosition.y / Tile.SIZE).toInt().toFloat()) {
             lastTilePosition.x = (smoothPosition.x / Tile.SIZE).toInt().toFloat()
             lastTilePosition.y = (smoothPosition.y / Tile.SIZE).toInt().toFloat()
 
@@ -49,7 +49,7 @@ abstract class Character constructor(texture: Texture): Image(texture) {
 
     protected fun setBodiesColor(){
         for (index in bodies.size - 1 downTo 0) {
-            var forceChangingColor = 5F
+            val forceChangingColor = 5F
 
             bodies[index].color = Color(1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F - forceChangingColor * index / 255F, 1F)
         }

@@ -21,6 +21,6 @@ class TileManager {
         tiles[TileType.STONE] = Tile(TileType.STONE, 1, true)
 
         tiles[TileType.BRUSH] = Tile(TileType.BRUSH, 1, false)
-        tiles[TileType.APPLE] = Tile(TileType.APPLE, 1, true)
+        //tiles[TileType.APPLE] = Tile(TileType.APPLE, 1, true)
     }
 }
