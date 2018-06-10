@@ -36,6 +36,15 @@ abstract class Character constructor(texture: Texture): Image(texture) {
         this.setBodiesColor()
     }
 
+    public fun removeBody(){
+        if (bodies.size >= 1) {
+            stage.unfocus(bodies.last())
+
+            bodies.last().remove()
+            bodies.remove(bodies.last())
+        }
+    }
+
     protected fun move(){
         when(direction){
             Direction.UP    -> smoothPosition.y += speed * Gdx.graphics.deltaTime

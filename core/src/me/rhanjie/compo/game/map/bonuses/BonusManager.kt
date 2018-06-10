@@ -33,12 +33,11 @@ class BonusManager {
     private fun load(){
         bonusesList[BonusType.APPLE]    = AppleBonus(BonusType.APPLE)
 
-        //TODO: Add other bonuses
         bonusesList[BonusType.SPEED]    = SpeedBonus(BonusType.SPEED)
-        bonusesList[BonusType.SLOW]     = SpeedBonus(BonusType.SLOW)
+        bonusesList[BonusType.SLOW]     = SlowBonus(BonusType.SLOW)
 
-        bonusesList[BonusType.INCREASE] = SpeedBonus(BonusType.INCREASE)
-        bonusesList[BonusType.DECREASE] = SpeedBonus(BonusType.DECREASE)
+        bonusesList[BonusType.INCREASE] = IncreaseBonus(BonusType.INCREASE)
+        bonusesList[BonusType.DECREASE] = DecreaseBonus(BonusType.DECREASE)
     }
 
     private fun getCopy(bonusType: BonusType, positionOnMap: Vector2): AbstractBonus {

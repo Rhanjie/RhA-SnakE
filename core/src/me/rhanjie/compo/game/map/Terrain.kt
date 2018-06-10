@@ -40,9 +40,17 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
                         if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
                             bonusManager.addBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
-
-                        else if ((0..100).random() > 98 && tiles[0][y][x]!!.type != TileType.STONE) {
+                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
                             bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
+                        }
+                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                            bonusManager.addBonus(BonusType.SLOW, Vector2(x.toFloat(), y.toFloat()), stage)
+                        }
+                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                            bonusManager.addBonus(BonusType.INCREASE, Vector2(x.toFloat(), y.toFloat()), stage)
+                        }
+                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                            bonusManager.addBonus(BonusType.DECREASE, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
                     }
 
