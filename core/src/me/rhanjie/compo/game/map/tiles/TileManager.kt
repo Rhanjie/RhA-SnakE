@@ -1,6 +1,4 @@
-package me.rhanjie.compo.game.map
-
-import me.rhanjie.compo.game.resources.TexturesManager
+package me.rhanjie.compo.game.map.tiles
 
 class TileManager {
     private var tiles = HashMap<TileType, Tile>()
@@ -9,7 +7,7 @@ class TileManager {
         this.load()
     }
 
-    fun getCopy(tileType: TileType): Tile{
+    fun getCopy(tileType: TileType): Tile {
         if (tiles.containsKey(tileType) == false)
             return tiles[TileType.GRASS]!!.copy()
 

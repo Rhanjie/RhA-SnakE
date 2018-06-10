@@ -1,4 +1,4 @@
-package me.rhanjie.compo.game.map
+package me.rhanjie.compo.game.map.tiles
 
 import com.badlogic.gdx.graphics.g2d.Sprite
 import me.rhanjie.compo.game.random

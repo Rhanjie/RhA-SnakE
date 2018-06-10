@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Image
-import me.rhanjie.compo.game.map.Tile
+import me.rhanjie.compo.game.map.tiles.Tile
+import me.rhanjie.compo.game.resources.TexturesManager
 
 abstract class Character constructor(texture: Texture): Image(texture) {
     enum class Direction{
@@ -21,8 +22,19 @@ abstract class Character constructor(texture: Texture): Image(texture) {
     var speed: Float = 400F
     var isDead: Boolean = false
 
-
     abstract fun update()
+
+    public fun addBody(){
+        bodies.add(Image(TexturesManager.getTexture("snakebody1")))
+
+        if(bodies.size <= 1)
+            bodies.last().setPosition(x, y)
+
+        else bodies.last().setPosition(bodies[bodies.lastIndex - 1].x, bodies[bodies.lastIndex - 1].y)
+
+        stage.addActor(bodies.last())
+        this.setBodiesColor()
+    }
 
     protected fun move(){
         when(direction){

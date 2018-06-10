@@ -2,8 +2,12 @@ package me.rhanjie.compo.game.map
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import me.rhanjie.compo.game.resources.TexturesManager
 import com.badlogic.gdx.scenes.scene2d.Stage
+import me.rhanjie.compo.game.map.bonuses.BonusManager
+import me.rhanjie.compo.game.map.bonuses.BonusType
+import me.rhanjie.compo.game.map.tiles.Tile
+import me.rhanjie.compo.game.map.tiles.TileManager
+import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.random
 
 
@@ -30,14 +34,12 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
 
                         if ((0..100).random() > 80 && tiles[0][y][x]!!.type != TileType.STONE) {
                             tiles[layer][y][x] = tileManager.getCopy(TileType.BRUSH)
-
-                            //bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
 
                         if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            //tiles[layer][y][x] = tileManager.getCopy(TileType.APPLE)
-
-
+                            //TODO: Fix this because adding to stage doesn't work
+                            //bonusManager.addAbstractBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
+                            //AbstractBonusManager.addAbstractBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
                         }
                     }
 
@@ -60,7 +62,7 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
     }
 
     fun update(){
-        //...
+        bonusManager.update()
     }
 
     fun render(layer: Int, batch: SpriteBatch){

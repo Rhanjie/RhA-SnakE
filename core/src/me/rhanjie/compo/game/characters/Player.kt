@@ -3,19 +3,12 @@ package me.rhanjie.compo.game.characters
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import me.rhanjie.compo.game.map.Terrain
-import me.rhanjie.compo.game.map.Tile
-import me.rhanjie.compo.game.map.TileType
-import me.rhanjie.compo.game.resources.TexturesManager
-import me.rhanjie.compo.game.characters.Character
-import me.rhanjie.compo.game.map.Bonus
-import me.rhanjie.compo.game.ui.Hud
+import me.rhanjie.compo.game.map.tiles.Tile
+import me.rhanjie.compo.game.map.tiles.TileType
+import me.rhanjie.compo.game.map.bonuses.AbstractBonus
 
 class Player constructor(spawnPosition: Vector2, texture: Texture): Character(texture) {
     var camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
@@ -44,42 +37,15 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
 
         tile = terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
         if (tile != null) {
-            /*if (tile.type == TileType.APPLE) {
-                bodies.add(Image(TexturesManager.getTexture("snakebody1")))
-
-                if(bodies.size <= 1)
-                    bodies.last().setPosition(x, y)
-
-                else bodies.last().setPosition(bodies[bodies.lastIndex - 1].x, bodies[bodies.lastIndex - 1].y)
-
-                stage.addActor(bodies.last())
-
-                speed += 50
-                Hud.score += 50
-
-                this.setBodiesColor()
-
-                terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()] = null
-            }*/
+            //...
         }
 
-        var bonus: Bonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+        var bonus: AbstractBonus? = terrain.bonusManager.getAbstractBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         if (bonus != null){
             bonus.collision(this)
 
-            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+            terrain.bonusManager.removeAbstractBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         }
-    }
-
-    fun addBody(){
-        bodies.add(Image(TexturesManager.getTexture("snakebody1")))
-
-        if(bodies.size <= 1)
-            bodies.last().setPosition(x, y)
-
-        else bodies.last().setPosition(bodies[bodies.lastIndex - 1].x, bodies[bodies.lastIndex - 1].y)
-
-        stage.addActor(bodies.last())
     }
 
     override fun update() {
