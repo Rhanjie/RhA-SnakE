@@ -1,6 +1,8 @@
 package me.rhanjie.compo.game
 
+import com.badlogic.gdx.Application
 import com.badlogic.gdx.Game
+import com.badlogic.gdx.Gdx
 import me.rhanjie.compo.game.state.GameplayScreen
 import java.util.*
 
@@ -14,6 +16,8 @@ class MyGame: Game() {
     }
 
     override fun create() {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
         this.setScreen(GameplayScreen(this))
     }
 }

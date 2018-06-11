@@ -49,7 +49,7 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
 
         this.generateBonuses(stage)
     }
-g
+
     //TODO: Add dynamic bonus spawning
     fun generateBonuses(stage: Stage){
         for(y in tiles[1].indices) {

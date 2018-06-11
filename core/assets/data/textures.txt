@@ -2,56 +2,23 @@
     textureNull:{
         value:textureNull.png
     },
-    grass1:{
-        value:grass1.png
+    grass:{
+        value:grass.png
     },
-    grass2:{
-        value:grass2.png
+    stone:{
+        value:stone.png
     },
-    grass3:{
-        value:grass3.png
-    },
-    grass4:{
-        value:grass4.png
-    },
-    grass5:{
-        value:grass4.png
-    },
-    grass6:{
-        value:grass5.png
-    },
-    grass6:{
-        value:grass6.png
-    },
-    grass7:{
-        value:grass7.png
-    },
-    grass8:{
-        value:grass8.png
-    },
-    grass9:{
-        value:grass9.png
-    },
-    grass10:{
-        value:grass10.png
-    },
-    grass11:{
-        value:grass11.png
-    },
-    stone1:{
-        value:stone1.png
-    },
-    brush1:{
-        value:brush1.png
+    brush:{
+        value:brush.png
     },
     apple:{
         value:apple.png
     },
-    snakehead1:{
-        value:snakehead1.png
+    snakehead:{
+        value:snakehead.png
     },
-    snakebody1:{
-        value:snakebody1.png
+    snakebody:{
+        value:snakebody.png
     },
     speed:{
         value:speed.png

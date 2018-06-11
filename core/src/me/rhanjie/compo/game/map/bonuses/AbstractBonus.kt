@@ -11,7 +11,7 @@ enum class BonusType {
 }
 
 abstract class AbstractBonus constructor(var type: BonusType, var positionOnMap: Vector2)
-    : Image(TexturesManager.getTexture(type.name.toLowerCase())) {
+    : Image(TexturesManager.getTexture(type.name.toLowerCase()+"1")) {
 
     init {
         this.x = positionOnMap.x * Tile.SIZE
