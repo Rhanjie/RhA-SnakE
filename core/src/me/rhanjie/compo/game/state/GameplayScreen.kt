@@ -21,8 +21,8 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
 
     companion object {
         val terrainLayers = 2
-        val terrainWidth = 30
-        val terrainHeight = 20
+        val terrainWidth = 100
+        val terrainHeight = 50
     }
 
     override fun create(){

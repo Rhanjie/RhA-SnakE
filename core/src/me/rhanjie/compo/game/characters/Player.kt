@@ -30,7 +30,7 @@ class Player constructor(spawnPosition: Vector2, texture: Texture): Character(te
 
         var tile: Tile? = terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
         if (tile != null) {
-            if (terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]!!.type == TileType.STONE) {
+            if (tile.type == TileType.STONE) {
                 isDead = true
             }
         }

@@ -27,7 +27,7 @@ abstract class Character constructor(texture: Texture): Image(texture) {
     public fun addBody(){
         bodies.add(Image(TexturesManager.getTexture("snakebody1")))
 
-        if(bodies.size <= 1)
+        if (bodies.size <= 1)
             bodies.last().setPosition(x, y)
 
         else bodies.last().setPosition(bodies[bodies.lastIndex - 1].x, bodies[bodies.lastIndex - 1].y)
@@ -42,6 +42,8 @@ abstract class Character constructor(texture: Texture): Image(texture) {
 
             bodies.last().remove()
             bodies.remove(bodies.last())
+
+            this.setBodiesColor()
         }
     }
 
@@ -63,8 +65,6 @@ abstract class Character constructor(texture: Texture): Image(texture) {
 
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
-
-            this.setBodiesColor()
         }
     }
 

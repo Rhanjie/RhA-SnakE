@@ -35,23 +35,6 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
                         if ((0..100).random() > 80 && tiles[0][y][x]!!.type != TileType.STONE) {
                             tiles[layer][y][x] = tileManager.getCopy(TileType.BRUSH)
                         }
-
-                        //TODO: Add dynamic bonus spawning
-                        if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            bonusManager.addBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
-                        }
-                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
-                        }
-                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            bonusManager.addBonus(BonusType.SLOW, Vector2(x.toFloat(), y.toFloat()), stage)
-                        }
-                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            bonusManager.addBonus(BonusType.INCREASE, Vector2(x.toFloat(), y.toFloat()), stage)
-                        }
-                        else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
-                            bonusManager.addBonus(BonusType.DECREASE, Vector2(x.toFloat(), y.toFloat()), stage)
-                        }
                     }
 
                     if (tiles[layer][y][x] != null) {
@@ -60,6 +43,27 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
 
                         //stage.addActor(tiles[layer][y][x])
                     }
+                }
+            }
+        }
+
+        this.generateBonuses(stage)
+    }
+g
+    //TODO: Add dynamic bonus spawning
+    fun generateBonuses(stage: Stage){
+        for(y in tiles[1].indices) {
+            for(x in tiles[1][y].indices) {
+                if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
+                    bonusManager.addBonus(BonusType.APPLE, Vector2(x.toFloat(), y.toFloat()), stage)
+                } else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                    bonusManager.addBonus(BonusType.SPEED, Vector2(x.toFloat(), y.toFloat()), stage)
+                } else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                    bonusManager.addBonus(BonusType.SLOW, Vector2(x.toFloat(), y.toFloat()), stage)
+                } else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                    bonusManager.addBonus(BonusType.INCREASE, Vector2(x.toFloat(), y.toFloat()), stage)
+                } else if ((0..100).random() > 97 && tiles[0][y][x]!!.type != TileType.STONE) {
+                    bonusManager.addBonus(BonusType.DECREASE, Vector2(x.toFloat(), y.toFloat()), stage)
                 }
             }
         }
