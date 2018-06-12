@@ -55,8 +55,8 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
         y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
 
-        camera.position.x = smoothPosition.x
-        camera.position.y = smoothPosition.y
+        camera.position.x = smoothPosition.x.toInt().toFloat()
+        camera.position.y = smoothPosition.y.toInt().toFloat()
 
         camera.update()
     }
