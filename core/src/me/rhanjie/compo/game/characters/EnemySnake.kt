@@ -7,7 +7,7 @@ import me.rhanjie.compo.game.map.bonuses.AbstractBonus
 import me.rhanjie.compo.game.map.tiles.Tile
 import me.rhanjie.compo.game.map.tiles.TileType
 
-class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Character(texture) {
+class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Character(texture, 2) {
     var tName: String = "unnamed"
     var target: Vector2? = null
 

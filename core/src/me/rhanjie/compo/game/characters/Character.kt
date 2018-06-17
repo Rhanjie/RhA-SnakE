@@ -12,7 +12,7 @@ import me.rhanjie.compo.game.map.tiles.Tile
 import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.resources.TexturesManager
 
-abstract class Character constructor(texture: TextureRegion): Image(texture) {
+abstract class Character constructor(texture: TextureRegion, val id: Int = 1): Image(texture) {
     enum class Direction{
         UP, DOWN, RIGHT, LEFT
     }
@@ -31,7 +31,7 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
     }
 
     public fun addBody(){
-        bodies.add(Image(TexturesManager.getTexture("snakebody1")))
+        bodies.add(Image(TexturesManager.getTexture("snakebody$id")))
 
         if (bodies.size <= 1)
             bodies.last().setPosition(x, y)

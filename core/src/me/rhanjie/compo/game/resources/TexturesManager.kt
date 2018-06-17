@@ -26,8 +26,7 @@ class TexturesManager{
 
                 for(y in (0 until texture.textureData.height / Tile.SIZE.toInt())){
                     for(x in (0 until texture.textureData.width / Tile.SIZE.toInt())){
-                        //TODO: Still problem with the gaps
-                        var textureRegion = TextureRegion(Texture(jsonValues[i].getString("value")), Tile.SIZE.toInt() * x+1, Tile.SIZE.toInt() * y-1, Tile.SIZE.toInt(), Tile.SIZE.toInt())
+                        var textureRegion = TextureRegion(Texture(jsonValues[i].getString("value")), Tile.SIZE.toInt() * x, Tile.SIZE.toInt() * y, Tile.SIZE.toInt(), Tile.SIZE.toInt())
                             textures[jsonValues[i].name+"${++index}"] = textureRegion
 
                         Gdx.app.debug("Tile Loading", "[${jsonValues[i].name + index}] ${jsonValues[i].getString("value")} [${Tile.SIZE.toInt() * x}:${Tile.SIZE.toInt() * y}]")
