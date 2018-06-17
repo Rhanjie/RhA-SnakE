@@ -53,6 +53,17 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
         }
     }
 
+    public fun changeDirection(direction: Direction){
+        this.direction = direction
+
+        when(this.direction){
+            Direction.RIGHT -> this.rotation = 0F
+            Direction.UP    -> this.rotation = 90F
+            Direction.LEFT  -> this.rotation = 180F
+            Direction.DOWN  -> this.rotation = 270F
+        }
+    }
+
     public open fun checkCollisions(terrain: Terrain) {
         for (index in (1..bodies.size - 1)) {
             if (x == bodies[index].x && y == bodies[index].y) {

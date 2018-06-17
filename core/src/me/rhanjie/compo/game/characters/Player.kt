@@ -36,22 +36,17 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
     }
 
     private fun handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN) {
-            direction = Direction.UP
-            this.rotation = 90F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP) {
-            direction = Direction.DOWN
-            this.rotation = 270F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT) {
-            direction = Direction.RIGHT
-            this.rotation = 0F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT) {
-            direction = Direction.LEFT
-            this.rotation = 180F
-        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN)
+            this.changeDirection(Direction.UP)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP)
+            this.changeDirection(Direction.DOWN)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT)
+            this.changeDirection(Direction.RIGHT)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT)
+            this.changeDirection(Direction.LEFT)
 
         this.move()
     }

@@ -61,34 +61,38 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
 
         if(target != null){
             if (lastTilePosition.x > target!!.x)
-                direction = Direction.LEFT
+                this.changeDirection(Direction.LEFT)
             else if (lastTilePosition.x < target!!.x)
-                direction = Direction.RIGHT
+                this.changeDirection(Direction.RIGHT)
 
             if (lastTilePosition.y > target!!.y)
-                direction = Direction.DOWN
+                this.changeDirection(Direction.DOWN)
             else if (lastTilePosition.y < target!!.y)
-                direction = Direction.UP
+                this.changeDirection(Direction.UP)
         }
 
         var tile: Tile? = null
 
         if(direction == Direction.RIGHT)
             tile = terrain.tiles[0][lastTilePosition.y.toInt()][(lastTilePosition.x + 1).toInt()]
-        if(direction == Direction.LEFT)
+
+        else if(direction == Direction.LEFT)
             tile = terrain.tiles[0][lastTilePosition.y.toInt()][(lastTilePosition.x - 1).toInt()]
-        if(direction == Direction.UP)
+
+        else if(direction == Direction.UP)
             tile = terrain.tiles[0][(lastTilePosition.y + 1).toInt()][lastTilePosition.x.toInt()]
-        if(direction == Direction.DOWN)
+
+        else if(direction == Direction.DOWN)
             tile = terrain.tiles[0][(lastTilePosition.y - 1).toInt()][lastTilePosition.x.toInt()]
+
 
         if (tile != null) {
             if (tile.type == TileType.STONE) {
                 when(direction){
-                    Direction.DOWN  -> direction = Direction.LEFT
-                    Direction.LEFT  -> direction = Direction.UP
-                    Direction.UP    -> direction = Direction.RIGHT
-                    Direction.RIGHT -> direction = Direction.DOWN
+                    Direction.DOWN  -> this.changeDirection(Direction.LEFT)
+                    Direction.LEFT  -> this.changeDirection(Direction.UP)
+                    Direction.UP    -> this.changeDirection(Direction.RIGHT)
+                    Direction.RIGHT -> this.changeDirection(Direction.DOWN)
                 }
             }
         }
