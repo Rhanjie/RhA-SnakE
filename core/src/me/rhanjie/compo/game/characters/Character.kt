@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Image
+import me.rhanjie.compo.game.map.Terrain
+import me.rhanjie.compo.game.map.bonuses.AbstractBonus
 import me.rhanjie.compo.game.map.tiles.Tile
+import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.resources.TexturesManager
 
 abstract class Character constructor(texture: TextureRegion): Image(texture) {
@@ -23,7 +26,9 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
     var speed: Float = 400F
     var isDead: Boolean = false
 
-    abstract fun update()
+    open fun update(terrain: Terrain){
+        this.checkCollisions(terrain)
+    }
 
     public fun addBody(){
         bodies.add(Image(TexturesManager.getTexture("snakebody1")))
@@ -45,6 +50,33 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
             bodies.remove(bodies.last())
 
             this.setBodiesColor()
+        }
+    }
+
+    public open fun checkCollisions(terrain: Terrain) {
+        for (index in (1..bodies.size - 1)) {
+            if (x == bodies[index].x && y == bodies[index].y) {
+                isDead = true
+            }
+        }
+
+        var tile: Tile? = terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
+        if (tile != null) {
+            if (tile.type == TileType.STONE) {
+                isDead = true
+            }
+        }
+
+        tile = terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
+        if (tile != null) {
+            //...
+        }
+
+        var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+        if (bonus != null){
+            bonus.collision(this)
+
+            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         }
     }
 

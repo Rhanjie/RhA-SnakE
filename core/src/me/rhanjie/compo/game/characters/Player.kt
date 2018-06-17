@@ -22,34 +22,8 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         smoothPosition = Vector2(x, y)
     }
 
-    fun checkCollisions(terrain: Terrain) {
-        for (index in (1..bodies.size - 1)) {
-            if (x == bodies[index].x && y == bodies[index].y) {
-                isDead = true
-            }
-        }
-
-        var tile: Tile? = terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
-        if (tile != null) {
-            if (tile.type == TileType.STONE) {
-                isDead = true
-            }
-        }
-
-        tile = terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
-        if (tile != null) {
-            //...
-        }
-
-        var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
-        if (bonus != null){
-            bonus.collision(this)
-
-            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
-        }
-    }
-
-    override fun update() {
+    override fun update(terrain: Terrain) {
+        super.update(terrain)
         this.handleInput()
 
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE

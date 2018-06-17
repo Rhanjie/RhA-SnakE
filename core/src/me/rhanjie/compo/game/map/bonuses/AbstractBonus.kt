@@ -2,6 +2,7 @@ package me.rhanjie.compo.game.map.bonuses
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Image
+import me.rhanjie.compo.game.characters.Character
 import me.rhanjie.compo.game.characters.Player
 import me.rhanjie.compo.game.map.tiles.Tile
 import me.rhanjie.compo.game.resources.TexturesManager
@@ -21,7 +22,7 @@ abstract class AbstractBonus constructor(var type: BonusType, var positionOnMap:
     }
 
     abstract fun copy(positionOnMap: Vector2): AbstractBonus
-    abstract fun collision(player: Player)
+    abstract fun collision(character: Character)
 
     open fun update(){
         //TODO: Just debug

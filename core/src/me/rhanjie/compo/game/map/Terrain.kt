@@ -11,7 +11,7 @@ import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.random
 
 
-class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
+class Terrain constructor(layers: Int, width: Int, height: Int, val stage: Stage){
     var tileManager: TileManager = TileManager()
     var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {tileManager.getCopy(TileType.GRASS)} )} )} )
 
@@ -47,11 +47,11 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
             }
         }
 
-        this.generateBonuses(stage)
+        this.generateBonuses()
     }
 
     //TODO: Add dynamic bonus spawning
-    fun generateBonuses(stage: Stage){
+    fun generateBonuses(){
         for(y in tiles[1].indices) {
             for(x in tiles[1][y].indices) {
                 if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
