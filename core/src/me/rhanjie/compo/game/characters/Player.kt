@@ -26,11 +26,19 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         super.update(terrain)
         this.handleInput()
 
-        x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
-        y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
+        this.updateCamera()
+    }
 
-        camera.position.x = smoothPosition.x//.toInt().toFloat()
-        camera.position.y = smoothPosition.y//.toInt().toFloat()
+    private fun updateCamera() {
+        camera.position.x = smoothPosition.x.toInt().toFloat()
+        camera.position.y = smoothPosition.y.toInt().toFloat()
+
+        //The code below fixing the gaps between the tiles
+        if (camera.position.x.toInt() % 2 != 0)
+            camera.position.x += 1
+
+        if (camera.position.y.toInt() % 2 != 0)
+            camera.position.y += 1
 
         camera.update()
     }

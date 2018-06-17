@@ -23,9 +23,6 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
         super.update(terrain)
         this.move()
 
-        x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
-        y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
-
         testAI(terrain)
     }
 

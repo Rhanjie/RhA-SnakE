@@ -110,6 +110,9 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
         }
+
+        x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
+        y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
     }
 
     protected fun setBodiesColor(){

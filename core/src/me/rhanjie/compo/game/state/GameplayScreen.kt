@@ -23,8 +23,8 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
 
     companion object {
         val terrainLayers = 2
-        val terrainWidth = 20
-        val terrainHeight = 20
+        val terrainWidth = 50
+        val terrainHeight = 40
     }
 
     override fun create(){
@@ -40,6 +40,7 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
 
         enemyManager = EnemyManager(stage)
         enemyManager.addEnemy(Vector2(terrainWidth * Tile.SIZE / 2, terrainHeight * Tile.SIZE / 2))
+        enemyManager.addEnemy(Vector2(terrainWidth * Tile.SIZE / 4, terrainHeight * Tile.SIZE / 4))
 
         Hud.create()
     }
