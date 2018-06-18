@@ -35,7 +35,7 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
     //TODO: Temporary function. Delete it when A* will be implemented
     private fun testAI(terrain: Terrain){
         if(target != null){
-            var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(target!!)
+            val bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(target!!)
             if (bonus == null){
                 target = null
             }
@@ -68,30 +68,59 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
                 this.changeDirection(Direction.UP)
         }
 
-        var tile: Tile? = null
 
-        if(direction == Direction.RIGHT)
+        var tile: Tile? = null
+        var isCollision = false
+
+        if(direction == Direction.RIGHT) {
             tile = terrain.tiles[0][lastTilePosition.y.toInt()][(lastTilePosition.x + 1).toInt()]
 
-        else if(direction == Direction.LEFT)
+            isCollision = this.checkCollisionWithBody(Tile.SIZE.toInt(), 0)
+        }
+
+        else if(direction == Direction.LEFT) {
             tile = terrain.tiles[0][lastTilePosition.y.toInt()][(lastTilePosition.x - 1).toInt()]
 
-        else if(direction == Direction.UP)
+            isCollision = this.checkCollisionWithBody(-Tile.SIZE.toInt(), 0)
+        }
+
+        else if(direction == Direction.UP) {
             tile = terrain.tiles[0][(lastTilePosition.y + 1).toInt()][lastTilePosition.x.toInt()]
 
-        else if(direction == Direction.DOWN)
+            isCollision = this.checkCollisionWithBody(0, Tile.SIZE.toInt())
+        }
+
+        else if(direction == Direction.DOWN) {
             tile = terrain.tiles[0][(lastTilePosition.y - 1).toInt()][lastTilePosition.x.toInt()]
 
+            isCollision = this.checkCollisionWithBody(0, -Tile.SIZE.toInt())
+        }
 
-        if (tile != null) {
-            if (tile.type == TileType.STONE) {
-                when(direction){
-                    Direction.DOWN  -> this.changeDirection(Direction.LEFT)
-                    Direction.LEFT  -> this.changeDirection(Direction.UP)
-                    Direction.UP    -> this.changeDirection(Direction.RIGHT)
-                    Direction.RIGHT -> this.changeDirection(Direction.DOWN)
-                }
+        if (isCollision == true)
+            this.changeDirection()
+
+        if (tile != null && tile.type == TileType.STONE)
+            this.changeDirection()
+    }
+
+    private fun checkCollisionWithBody(offsetX: Int, offsetY: Int): Boolean{
+        for (body  in bodies) {
+            //println("${x + offsetX} -> ${body.x}")
+
+            if (x + offsetX == body.x && y + offsetY == body.y) {
+                return true
             }
+        }
+
+        return false
+    }
+
+    private fun changeDirection(){
+        when(direction){
+            Direction.DOWN  -> this.changeDirection(Direction.LEFT)
+            Direction.LEFT  -> this.changeDirection(Direction.UP)
+            Direction.UP    -> this.changeDirection(Direction.RIGHT)
+            Direction.RIGHT -> this.changeDirection(Direction.DOWN)
         }
     }
 }
