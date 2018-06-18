@@ -24,8 +24,9 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
     lateinit var smoothPosition: Vector2
     lateinit var lastTilePosition: Vector2
 
-    var speed: Float = 400F
     var isDead: Boolean = false
+    var speed: Float = 400F
+    var score: Int = 0
 
     open fun update(terrain: Terrain){
         this.checkCollisions(terrain)

@@ -10,6 +10,7 @@ import me.rhanjie.compo.game.map.Terrain
 import me.rhanjie.compo.game.map.tiles.Tile
 import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.map.bonuses.AbstractBonus
+import me.rhanjie.compo.game.ui.Hud
 
 class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Character(texture) {
     var camera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
@@ -27,6 +28,8 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         this.handleInput()
 
         this.updateCamera()
+
+        Hud.score = score
     }
 
     private fun updateCamera() {

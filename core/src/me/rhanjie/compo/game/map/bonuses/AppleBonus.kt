@@ -9,7 +9,7 @@ class AppleBonus constructor(type: BonusType, positionOnMap: Vector2 = Vector2(0
     override fun collision(character: Character) {
         character.addBody()
 
-        Hud.score += 50
+        character.score += 50
     }
 
     override fun copy(positionOnMap: Vector2): AppleBonus = AppleBonus(type, positionOnMap)
