@@ -19,6 +19,7 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
 
     var bodies: MutableList<Image> = mutableListOf()
     var direction: Direction = Direction.RIGHT
+    var changedDirection = false
 
     lateinit var smoothPosition: Vector2
     lateinit var lastTilePosition: Vector2
@@ -62,6 +63,8 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
             Direction.LEFT  -> this.rotation = 180F
             Direction.DOWN  -> this.rotation = 270F
         }
+
+        changedDirection = true
     }
 
     public open fun checkCollisions(terrain: Terrain) {
@@ -109,6 +112,8 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
 
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
+
+            changedDirection = false
         }
 
         x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
