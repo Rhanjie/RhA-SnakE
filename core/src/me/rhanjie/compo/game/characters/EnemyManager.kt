@@ -15,21 +15,24 @@ class EnemyManager constructor(val stage: Stage) {
     }
 
     fun update(terrain: Terrain){
-        for(enemy in enemies) {
-            enemy.update(terrain)
+        var i = -1
 
-            if (enemy.isDead) {
-                for (body in enemy.bodies) {
-                    this.stage.unfocus(body)
+        while(++i <= enemies.size - 1){
+            enemies[i].update(terrain)
 
-                    body.remove()
-                }
-
-                enemies.remove(enemy)
-                enemy.remove()
-
-                return
-            }
+            if (enemies[i].isDead)
+                this.removeObject(enemies[i--])
         }
+    }
+
+    private fun removeObject(enemy: EnemySnake){
+        for (body in enemy.bodies) {
+            this.stage.unfocus(body)
+
+            body.remove()
+        }
+
+        enemies.remove(enemy)
+        enemy.remove()
     }
 }

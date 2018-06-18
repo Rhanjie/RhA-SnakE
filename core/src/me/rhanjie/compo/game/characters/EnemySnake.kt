@@ -34,6 +34,26 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
 
     //TODO: Temporary function. Delete it when A* will be implemented
     private fun testAI(terrain: Terrain){
+        this.setTarget(terrain)
+
+        if(target != null){
+            if (lastTilePosition.x > target!!.x)
+                this.changeDirection(Direction.LEFT)
+
+            else if (lastTilePosition.x < target!!.x)
+                this.changeDirection(Direction.RIGHT)
+
+            if (lastTilePosition.y > target!!.y)
+                this.changeDirection(Direction.DOWN)
+
+            else if (lastTilePosition.y < target!!.y)
+                this.changeDirection(Direction.UP)
+        }
+
+        this.trySurvive(terrain)
+    }
+
+    private fun setTarget(terrain: Terrain){
         if(target != null){
             val bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(target!!)
             if (bonus == null){
@@ -55,20 +75,28 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
                 }
             }
         }
+    }
 
-        if(target != null){
-            if (lastTilePosition.x > target!!.x)
-                this.changeDirection(Direction.LEFT)
-            else if (lastTilePosition.x < target!!.x)
-                this.changeDirection(Direction.RIGHT)
-
-            if (lastTilePosition.y > target!!.y)
-                this.changeDirection(Direction.DOWN)
-            else if (lastTilePosition.y < target!!.y)
-                this.changeDirection(Direction.UP)
+    private fun checkCollisionWithBody(offsetX: Int, offsetY: Int): Boolean {
+        for (body  in bodies) {
+            if (x + offsetX == body.x && y + offsetY == body.y) {
+                return true
+            }
         }
 
+        return false
+    }
 
+    private fun fixDirection() {
+        when(direction){
+            Direction.DOWN  -> this.changeDirection(Direction.LEFT)
+            Direction.LEFT  -> this.changeDirection(Direction.UP)
+            Direction.UP    -> this.changeDirection(Direction.RIGHT)
+            Direction.RIGHT -> this.changeDirection(Direction.DOWN)
+        }
+    }
+
+    private fun trySurvive(terrain: Terrain) {
         var tile: Tile? = null
         var isCollision = false
 
@@ -96,31 +124,7 @@ class EnemySnake constructor(spawnPosition: Vector2, texture: TextureRegion): Ch
             isCollision = this.checkCollisionWithBody(0, -Tile.SIZE.toInt())
         }
 
-        if (isCollision == true)
-            this.changeDirection()
-
-        if (tile != null && tile.type == TileType.STONE)
-            this.changeDirection()
-    }
-
-    private fun checkCollisionWithBody(offsetX: Int, offsetY: Int): Boolean{
-        for (body  in bodies) {
-            //println("${x + offsetX} -> ${body.x}")
-
-            if (x + offsetX == body.x && y + offsetY == body.y) {
-                return true
-            }
-        }
-
-        return false
-    }
-
-    private fun changeDirection(){
-        when(direction){
-            Direction.DOWN  -> this.changeDirection(Direction.LEFT)
-            Direction.LEFT  -> this.changeDirection(Direction.UP)
-            Direction.UP    -> this.changeDirection(Direction.RIGHT)
-            Direction.RIGHT -> this.changeDirection(Direction.DOWN)
-        }
+        if (isCollision == true || (tile != null && tile.type == TileType.STONE))
+            this.fixDirection()
     }
 }
