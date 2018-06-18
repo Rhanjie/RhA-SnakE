@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import me.rhanjie.compo.game.MyGame
+import me.rhanjie.compo.game.characters.EnemyManager
 import me.rhanjie.compo.game.characters.Player
 import me.rhanjie.compo.game.map.*
 import me.rhanjie.compo.game.map.bonuses.BonusType
@@ -18,11 +19,12 @@ import me.rhanjie.compo.game.ui.Hud
 class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
     lateinit var terrain: Terrain
     lateinit var player: Player
+    lateinit var enemyManager: EnemyManager
 
     companion object {
         val terrainLayers = 2
-        val terrainWidth = 100
-        val terrainHeight = 50
+        val terrainWidth = 50
+        val terrainHeight = 40
     }
 
     override fun create(){
@@ -36,6 +38,10 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
 
         terrain = Terrain(terrainLayers, terrainWidth, terrainHeight, stage)
 
+        enemyManager = EnemyManager(stage)
+        enemyManager.addEnemy(Vector2(terrainWidth * Tile.SIZE / 2, terrainHeight * Tile.SIZE / 2))
+        enemyManager.addEnemy(Vector2(terrainWidth * Tile.SIZE / 4, terrainHeight * Tile.SIZE / 4))
+
         Hud.create()
     }
 
@@ -43,9 +49,9 @@ class GameplayScreen constructor(game: MyGame): AbstractManager(game) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
             Gdx.app.exit()
 
-        player.update()
-        player.checkCollisions(terrain)
+        player.update(terrain)
         terrain.update()
+        enemyManager.update(terrain)
 
         Hud.update()
 

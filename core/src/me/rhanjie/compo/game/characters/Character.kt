@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Image
+import me.rhanjie.compo.game.map.Terrain
+import me.rhanjie.compo.game.map.bonuses.AbstractBonus
 import me.rhanjie.compo.game.map.tiles.Tile
+import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.resources.TexturesManager
 
-abstract class Character constructor(texture: TextureRegion): Image(texture) {
+abstract class Character constructor(texture: TextureRegion, val id: Int = 1): Image(texture) {
     enum class Direction{
         UP, DOWN, RIGHT, LEFT
     }
@@ -23,10 +26,12 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
     var speed: Float = 400F
     var isDead: Boolean = false
 
-    abstract fun update()
+    open fun update(terrain: Terrain){
+        this.checkCollisions(terrain)
+    }
 
     public fun addBody(){
-        bodies.add(Image(TexturesManager.getTexture("snakebody1")))
+        bodies.add(Image(TexturesManager.getTexture("snakebody$id")))
 
         if (bodies.size <= 1)
             bodies.last().setPosition(x, y)
@@ -45,6 +50,44 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
             bodies.remove(bodies.last())
 
             this.setBodiesColor()
+        }
+    }
+
+    public fun changeDirection(direction: Direction){
+        this.direction = direction
+
+        when(this.direction){
+            Direction.RIGHT -> this.rotation = 0F
+            Direction.UP    -> this.rotation = 90F
+            Direction.LEFT  -> this.rotation = 180F
+            Direction.DOWN  -> this.rotation = 270F
+        }
+    }
+
+    public open fun checkCollisions(terrain: Terrain) {
+        for (index in (1..bodies.size - 1)) {
+            if (x == bodies[index].x && y == bodies[index].y) {
+                isDead = true
+            }
+        }
+
+        var tile: Tile? = terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
+        if (tile != null) {
+            if (tile.type == TileType.STONE) {
+                isDead = true
+            }
+        }
+
+        tile = terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
+        if (tile != null) {
+            //...
+        }
+
+        var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
+        if (bonus != null){
+            bonus.collision(this)
+
+            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
         }
     }
 
@@ -67,6 +110,9 @@ abstract class Character constructor(texture: TextureRegion): Image(texture) {
                 else bodies[index].setPosition(bodies[index - 1].x, bodies[index - 1].y)
             }
         }
+
+        x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
+        y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
     }
 
     protected fun setBodiesColor(){

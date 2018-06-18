@@ -1,5 +1,6 @@
 package me.rhanjie.compo.game.map
 
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -11,7 +12,7 @@ import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.random
 
 
-class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
+class Terrain constructor(layers: Int, width: Int, height: Int, val stage: Stage){
     var tileManager: TileManager = TileManager()
     var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {tileManager.getCopy(TileType.GRASS)} )} )} )
 
@@ -47,11 +48,11 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
             }
         }
 
-        this.generateBonuses(stage)
+        this.generateBonuses()
     }
 
     //TODO: Add dynamic bonus spawning
-    fun generateBonuses(stage: Stage){
+    fun generateBonuses(){
         for(y in tiles[1].indices) {
             for(x in tiles[1][y].indices) {
                 if ((0..100).random() > 96 && tiles[0][y][x]!!.type != TileType.STONE) {
@@ -74,6 +75,8 @@ class Terrain constructor(layers: Int, width: Int, height: Int, stage: Stage){
 
         tiles[layer][y][x]!!.x = x * Tile.SIZE
         tiles[layer][y][x]!!.y = y * Tile.SIZE
+
+        tiles[layer][y][x]!!.texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest)
     }
 
     fun update(){

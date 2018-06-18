@@ -22,7 +22,15 @@ class BonusManager {
             AbstractBonus.value.update()
     }
 
-    fun getBonusOnPosition(positionOnMap: Vector2): AbstractBonus? = bonuses[positionOnMap]
+    //fun getBonusOnPosition(positionOnMap: Vector2): AbstractBonus? = bonuses[positionOnMap]
+
+    fun getBonusOnPosition(positionOnMap: Vector2): AbstractBonus?{
+        if(bonuses.containsKey(positionOnMap) == false)
+            return null
+
+        else return bonuses[positionOnMap]
+    }
+    
     fun removeBonus(positionOnMap: Vector2){
         if (bonuses.containsKey(positionOnMap) == true) {
             bonuses[positionOnMap]!!.remove()

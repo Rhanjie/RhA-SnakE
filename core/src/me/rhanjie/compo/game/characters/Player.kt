@@ -22,62 +22,39 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         smoothPosition = Vector2(x, y)
     }
 
-    fun checkCollisions(terrain: Terrain) {
-        for (index in (1..bodies.size - 1)) {
-            if (x == bodies[index].x && y == bodies[index].y) {
-                isDead = true
-            }
-        }
-
-        var tile: Tile? = terrain.tiles[0][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
-        if (tile != null) {
-            if (tile.type == TileType.STONE) {
-                isDead = true
-            }
-        }
-
-        tile = terrain.tiles[1][(y / Tile.SIZE).toInt()][(x / Tile.SIZE).toInt()]
-        if (tile != null) {
-            //...
-        }
-
-        var bonus: AbstractBonus? = terrain.bonusManager.getBonusOnPosition(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
-        if (bonus != null){
-            bonus.collision(this)
-
-            terrain.bonusManager.removeBonus(Vector2((x / Tile.SIZE), (y / Tile.SIZE)))
-        }
-    }
-
-    override fun update() {
+    override fun update(terrain: Terrain) {
+        super.update(terrain)
         this.handleInput()
 
-        x = (smoothPosition.x / Tile.SIZE).toInt() * Tile.SIZE
-        y = (smoothPosition.y / Tile.SIZE).toInt() * Tile.SIZE
+        this.updateCamera()
+    }
 
-        camera.position.x = smoothPosition.x.toInt().toFloat()
-        camera.position.y = smoothPosition.y.toInt().toFloat()
+    private fun updateCamera() {
+        camera.position.x = Math.round(smoothPosition.x).toFloat()
+        camera.position.y = Math.round(smoothPosition.y).toFloat()
+
+        //The code below fixing the gaps between the tiles
+        if (camera.position.x.toInt() % 2 != 0)
+            camera.position.x += 1
+
+        if (camera.position.y.toInt() % 2 != 0)
+            camera.position.y += 1
 
         camera.update()
     }
 
     private fun handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN) {
-            direction = Direction.UP
-            this.rotation = 90F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP) {
-            direction = Direction.DOWN
-            this.rotation = 270F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT) {
-            direction = Direction.RIGHT
-            this.rotation = 0F
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT) {
-            direction = Direction.LEFT
-            this.rotation = 180F
-        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && direction != Direction.DOWN)
+            this.changeDirection(Direction.UP)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && direction != Direction.UP)
+            this.changeDirection(Direction.DOWN)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && direction != Direction.LEFT)
+            this.changeDirection(Direction.RIGHT)
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && direction != Direction.RIGHT)
+            this.changeDirection(Direction.LEFT)
 
         this.move()
     }
