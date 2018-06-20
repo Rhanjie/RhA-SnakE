@@ -11,7 +11,6 @@ import me.rhanjie.compo.game.map.tiles.TileManager
 import me.rhanjie.compo.game.map.tiles.TileType
 import me.rhanjie.compo.game.random
 
-
 class Terrain constructor(layers: Int, width: Int, height: Int, val stage: Stage){
     var tileManager: TileManager = TileManager()
     var tiles: Array<Array<Array<Tile?>>> = Array(layers, {Array(height, {Array<Tile?>(width, {tileManager.getCopy(TileType.GRASS)} )} )} )
