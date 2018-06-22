@@ -10,6 +10,7 @@ class AppleBonus constructor(type: BonusType, positionOnMap: Vector2 = Vector2(0
         character.addBody()
 
         character.score += 50
+        character.hunger += 10
     }
 
     override fun copy(positionOnMap: Vector2): AppleBonus = AppleBonus(type, positionOnMap)
