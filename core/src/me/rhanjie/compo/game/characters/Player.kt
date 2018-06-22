@@ -28,22 +28,8 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         this.handleInput()
 
         this.updateCamera()
-
-        Hud.score = score
-    }
-
-    private fun updateCamera() {
-        camera.position.x = Math.round(smoothPosition.x).toFloat()
-        camera.position.y = Math.round(smoothPosition.y).toFloat()
-
-        //The code below fixing the gaps between the tiles
-        if (camera.position.x.toInt() % 2 != 0)
-            camera.position.x += 1
-
-        if (camera.position.y.toInt() % 2 != 0)
-            camera.position.y += 1
-
-        camera.update()
+        this.updateHunger()
+        this.updateHUD()
     }
 
     private fun handleInput() {
@@ -62,5 +48,36 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
         }
 
         this.move()
+    }
+
+    private fun updateCamera() {
+        camera.position.x = Math.round(smoothPosition.x).toFloat()
+        camera.position.y = Math.round(smoothPosition.y).toFloat()
+
+        //The code below fixing the gaps between the tiles
+        if (camera.position.x.toInt() % 2 != 0)
+            camera.position.x += 1
+
+        if (camera.position.y.toInt() % 2 != 0)
+            camera.position.y += 1
+
+        camera.update()
+    }
+
+    private fun updateHunger() {
+        hunger -= hungerSpeed * Gdx.graphics.deltaTime
+
+        //Only 99 because label jumping when is 100
+        if (hunger > 99F)
+            hunger = 99F
+
+        if (hunger <= 0)
+            isDead = true
+    }
+
+    private fun updateHUD() {
+        Hud.score = score
+        //TODO: will be added soon
+        //Hud.hunger = hunger.toInt()
     }
 }

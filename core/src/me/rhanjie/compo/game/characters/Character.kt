@@ -27,6 +27,8 @@ abstract class Character constructor(texture: TextureRegion, val id: Int = 1): I
     var isDead: Boolean = false
     var speed: Float = 400F
     var score: Int = 0
+    var hunger: Float = 100F
+    var hungerSpeed: Float = 5F
 
     open fun update(terrain: Terrain){
         this.checkCollisions(terrain)
