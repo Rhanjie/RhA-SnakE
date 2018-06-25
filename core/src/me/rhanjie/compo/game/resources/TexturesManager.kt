@@ -17,16 +17,16 @@ class TexturesManager{
 
         private fun load() {
             val file = Gdx.files.local("data/textures.txt")
-            var jsonValues = JsonReader().parse(file.readString())
+            val jsonValues = JsonReader().parse(file.readString())
             var index = 0
 
             println("Loading resources...")
             for(i in (0 until 11)) { //TODO: Get size from file
-                var texture = Texture(jsonValues[i].getString("value"))
+                val texture = Texture(jsonValues[i].getString("value"))
 
                 for(y in (0 until texture.textureData.height / Tile.SIZE.toInt())){
                     for(x in (0 until texture.textureData.width / Tile.SIZE.toInt())){
-                        var textureRegion = TextureRegion(Texture(jsonValues[i].getString("value")), Tile.SIZE.toInt() * x, Tile.SIZE.toInt() * y, Tile.SIZE.toInt(), Tile.SIZE.toInt())
+                        val textureRegion = TextureRegion(Texture(jsonValues[i].getString("value")), Tile.SIZE.toInt() * x, Tile.SIZE.toInt() * y, Tile.SIZE.toInt(), Tile.SIZE.toInt())
                             textures[jsonValues[i].name+"${++index}"] = textureRegion
 
                         Gdx.app.debug("Tile Loading", "[${jsonValues[i].name + index}] ${jsonValues[i].getString("value")} [${Tile.SIZE.toInt() * x}:${Tile.SIZE.toInt() * y}]")

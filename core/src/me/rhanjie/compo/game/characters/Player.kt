@@ -77,7 +77,6 @@ class Player constructor(spawnPosition: Vector2, texture: TextureRegion): Charac
 
     private fun updateHUD() {
         Hud.score = score
-        //TODO: will be added soon
-        //Hud.hunger = hunger.toInt()
+        Hud.hunger = hunger.toInt()
     }
 }
